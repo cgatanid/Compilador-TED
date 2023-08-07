@@ -1,6 +1,6 @@
 # Compilador-TED
 
-El proyecto está compuesto por varios archivos de Python que trabajan en conjunto para realizar una tarea específica: la compilación de datos TED (Trabajadores del Estado con Despacho) y la generación de copias de seguridad (backups) de esos datos.
+El proyecto está compuesto por varios archivos de Python que trabajan en conjunto para realizar una tarea específica: la compilación de datos TED y la generación de copias de seguridad (backups) de esos datos.
 
 El proyecto utiliza la biblioteca "schedule" para programar tareas y ejecutar la función "backupJob()" diariamente a una hora específica.
 El proyecto utiliza la biblioteca "pytimedinput" para recibir una entrada del usuario y, en función de esta entrada, ejecutar "resetJob()" para una compilación desde cero o iniciar la compilación regular.
