@@ -29,7 +29,8 @@ Este archivo contiene funciones útiles, como "timeLog(logMessage)", que se util
 Contiene la función "backupJob()", que es responsable de realizar la compilación y respaldo de los datos TED.
 Esta función realiza una comparación entre los datos antiguos y los datos nuevos para detectar cambios en los archivos TED.
 Los archivos TED incluyen "cabeceraexpedientesXXXX.txt" y "detalleexpedientesXXXX_v3.txt" (donde XXXX representa el año).
-resetModule.py:
+
+## resetModule.py:
 
 Este archivo contiene la función "resetJob()", que es similar a "backupJob()", pero se utiliza para una compilación desde cero.
 Si se le pasa el texto "reset" al programa, se ejecutará la compilación desde cero.
