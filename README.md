@@ -6,12 +6,12 @@ El proyecto utiliza la biblioteca "schedule" para programar tareas y ejecutar la
 El proyecto utiliza la biblioteca "pytimedinput" para recibir una entrada del usuario y, en función de esta entrada, ejecutar "resetJob()" para una compilación desde cero o iniciar la compilación regular.
 En resumen, el primer proyecto "dumpTED" está diseñado para realizar compilaciones regulares de datos TED y realizar copias de seguridad. La compilación consiste en detectar cambios en los archivos TED y actualizar la base de datos SQLite utilizada para almacenar los datos compilados. También ofrece la opción de realizar una compilación desde cero si el usuario lo solicita.
 
-El archivo principal del proyecto es "manager.py". Este archivo es el punto de entrada del programa y contiene la función principal "main()".
+
 
 ## manager.py:
 
 
-Este archivo importa las bibliotecas necesarias y otros archivos del proyecto.
+El archivo principal del proyecto es "manager.py". Este archivo es el punto de entrada del programa y contiene la función principal "main()". Este archivo importa las bibliotecas necesarias y otros archivos del proyecto.
 Lee la configuración del archivo "dumpTED.conf", que contiene algunas variables de configuración importantes.
 La función "main()" inicia el proceso de compilación de datos TED.
 
