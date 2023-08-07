@@ -1,9 +1,12 @@
 # Compilador-TED
 
-
 El proyecto está compuesto por varios archivos de Python que trabajan en conjunto para realizar una tarea específica: la compilación de datos TED (Trabajadores del Estado con Despacho) y la generación de copias de seguridad (backups) de esos datos.
 
-El archivo principal del proyecto es "manager.py". Este archivo es el punto de entrada del programa y contiene la función principal "main()". Veamos paso a paso cómo funciona el proyecto:
+El proyecto utiliza la biblioteca "schedule" para programar tareas y ejecutar la función "backupJob()" diariamente a una hora específica.
+El proyecto utiliza la biblioteca "pytimedinput" para recibir una entrada del usuario y, en función de esta entrada, ejecutar "resetJob()" para una compilación desde cero o iniciar la compilación regular.
+En resumen, el primer proyecto "dumpTED" está diseñado para realizar compilaciones regulares de datos TED y realizar copias de seguridad. La compilación consiste en detectar cambios en los archivos TED y actualizar la base de datos SQLite utilizada para almacenar los datos compilados. También ofrece la opción de realizar una compilación desde cero si el usuario lo solicita.
+
+El archivo principal del proyecto es "manager.py". Este archivo es el punto de entrada del programa y contiene la función principal "main()".
 
 ## manager.py:
 
@@ -37,8 +40,4 @@ Este archivo tiene la función "exportTED2CSV()", que se utiliza para exportar l
 Se generan dos archivos CSV, uno para los datos de cabecera y otro para los detalles de las transacciones TED.
 Otras funcionalidades:
 
-El proyecto utiliza la biblioteca "schedule" para programar tareas y ejecutar la función "backupJob()" diariamente a una hora específica.
-El proyecto utiliza la biblioteca "pytimedinput" para recibir una entrada del usuario y, en función de esta entrada, ejecutar "resetJob()" para una compilación desde cero o iniciar la compilación regular.
-En resumen, el primer proyecto "dumpTED" está diseñado para realizar compilaciones regulares de datos TED y realizar copias de seguridad. La compilación consiste en detectar cambios en los archivos TED y actualizar la base de datos SQLite utilizada para almacenar los datos compilados. También ofrece la opción de realizar una compilación desde cero si el usuario lo solicita.
 
-Es importante mencionar que este análisis se basa en la revisión de los archivos proporcionados. Si hay más funcionalidades en otros archivos que no se han mostrado aquí, es posible que haya más detalles en el funcionamiento del proyecto.
