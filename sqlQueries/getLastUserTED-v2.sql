@@ -1,0 +1,102 @@
+-- --1. crea una vista que almaceda las transacciones de cada memo dentro de un TED
+-- DROP VIEW IF EXISTS logsMemoTED;
+-- CREATE VIEW logsMemoTED AS
+-- --utiliza una consulta anidada para filtrar considerando sólo los memos dentro de los TED (excluye resoluciones, cartas, otro tipo de documentos, etc)
+-- SELECT det.numero_expediente, mem.numero_documento,mem.fecha_documento_origen AS fecha_creacion,det.nombreautor, mem.materia, det.usuarioorigen, det.usuariodestino, det.desc_unidad AS unidaddestino, det.fechaingresobandeja, det.fechadespacho, det.archivado
+-- FROM NewTedDetails AS det LEFT JOIN 
+-- (SELECT * FROM NewTedHeaders WHERE desc_tipodoc='Memorandum') AS mem
+-- ON det.id=mem.id
+-- WHERE copia='f' AND det.numero_expediente IS NOT NULL AND mem.numero_documento IS NOT NULL
+-- ORDER BY det.numero_expediente, mem.numero_documento, det.fechaingresobandeja;
+
+-- --2. determina el número del memo que fue el primero en crearse dentro del expediente. Este será el número que determinará usuario creador y el que será seguido.
+-- DROP VIEW IF EXISTS headMemoTED;
+-- CREATE VIEW headMemoTED AS
+-- --utiliza un select anidado donde levanta la fecha de creacion de cada memo en el expediente
+-- --luego obtiene el memo de menor fecha de creación dentro de cada expediente
+-- SELECT a.numero_expediente,a.numero_documento,a.nombreautor,
+-- CASE
+-- WHEN a.nombreautor='KAREN  RAMIREZ ROBLES' THEN 'ATRACCION E INSERCION DE CAPITAL HUMANO'
+-- WHEN b.desc_unidad='JURIDICO' THEN 'FISCALIA'
+-- ELSE b.desc_unidad
+-- END AS unidadautor,
+-- MIN(a.g_fecha_creacion) AS fecha_creacion,a.materia FROM 
+-- (SELECT MIN(fecha_creacion) AS g_fecha_creacion, * FROM logsMemoTED
+-- GROUP BY numero_expediente, numero_documento) AS a
+-- LEFT JOIN 
+-- (select DISTINCT nombredestinatario, desc_unidad from NewTedDetails
+-- union select 'GLADYS ARAYA FUENTES', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'EVELYN TORREALBA PEZOA', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'JANIS ACEVEDO VIDAL', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'JOCELYN CONTRERAS CAMPOS', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'PAUL NUÑEZ SILVA', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'YAZMIN RIOS HUENUMAN', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'DANIELLA PASTOR DE LA HUERTA', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'SEBASTIAN SAENZ PUENTES', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'VIVIANA  CACERES ALVEAL', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'MARCELA BENAVIDES BARRA', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'RODRIGO MORA ARCOS', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'CATHERINE HAACKE CONCHA', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'MIGUEL SALAS LETELIER', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'BIANCA PIZARRO PLAZA', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'NATALIA VILCHES NATALIA', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'CLAUDIA ALEJANDRA PALACIOS SAAVEDRA', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'LUCAS OSORIO ARANGUIZ', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'MARIBEL HERRERA FUENTES', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'GLORIA SALAS POBLETE', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'EVELYN FIGUEROA ACEVEDO', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'LEONARDO MALDONADO  DEMANET', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'EDUARDO  CONTRERAS  GAILLARD', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'PEDRO ARIAS GARCES', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'BENJAMIN AARON URRUTIA PASTEN', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'MIGUEL IGNACIO SAUMA PEREZ', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'JORGE PARRA HERRERA', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'MARITZA DONOSO ORMEÑO', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'ANDREINA ELISA GUTIERREZ NIETO', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'ANA BELEN GUTIERREZ JOFRE', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'CONSTANZA PEÑAILILLO MARDONES', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'VIVIANA VARGAS SAZO', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'BIANCA LEIVA AGUAYO', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'AYLEEN GARCIA CORVACHO', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'FRANCESCA GOLDSCHMIDT X', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'CAROLINA FREIRE TAPIA', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'MARIO HECTOR MAYORGA GAETE', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'SANDRA ARMANDO CONTADOR', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'NANCY  RUBIO RUBIO', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'SOFIA AGUIRRE TORRINI', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'VERONICA AGUIRRE SANTIBAÑEZ', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'FABIOLA CID WOODHEAD', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'JULIAN ANDRES RETAMAL  SANTANDER', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'LEONARDO MALDONADO DEMANET', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'CLAUDIA GRUNDSTRONG GALLARDO', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- union select 'MOISES PATRICIO ARÉVALO REYES', 'FORMACION CAPITAL HUMANO AVANZADO'
+-- )
+-- AS b ON a.nombreautor=b.nombredestinatario
+-- GROUP BY a.numero_expediente;
+
+-- --3. captura el último usuario que recibió el TED
+-- DROP VIEW IF EXISTS lastMemoTED;
+-- CREATE VIEW lastMemoTED AS
+-- --filtra de entre los logs la transación con la mayor fecha de ingreso a bandeja (el último movimiento del TED)
+-- --aisla ese registro dejando sólo un memo por cada TED
+-- SELECT numero_expediente, numero_documento,fecha_creacion, materia, usuarioorigen, usuariodestino, unidaddestino, MAX(g_fechaingresobandeja) AS fechaingresobandeja, fechadespacho, archivado FROM
+-- (SELECT MAX(fechaingresobandeja) g_fechaingresobandeja,* FROM logsMemoTED
+-- GROUP BY numero_expediente, numero_documento)
+-- GROUP by numero_expediente;
+
+-- --4. finalmente, guarda una vista con el formato definitivo para exportar a base de producción
+-- DROP VIEW IF EXISTS ViewTedLastUser;
+-- CREATE VIEW ViewTedLastUser AS
+-- --agrega un join para levantar el nombre del autor del memo
+-- SELECT lst.numero_expediente, lst.numero_documento, 'Memorandum' AS tipodocumento ,lst.fecha_creacion, hdt.nombreautor, hdt.unidadautor, lst.materia, lst.usuarioorigen, lst.usuariodestino,
+-- --se deben correguir algunos errores de ingreso de usuarios al TED
+-- CASE
+-- WHEN lst.usuariodestino='KAREN  RAMIREZ ROBLES' THEN 'ATRACCION E INSERCION DE CAPITAL HUMANO'
+-- WHEN lst.unidaddestino='JURIDICO' THEN 'FISCALIA'
+-- ELSE lst.unidaddestino
+-- END AS unidaddestino,
+-- lst.fechaingresobandeja, lst.fechadespacho, lst.archivado
+-- FROM lastMemoTED lst LEFT JOIN headMemoTED hdt ON lst.numero_documento=hdt.numero_documento;
+
+--5. carga los datos de las visualizaciones que se han creado
+SELECT * FROM ViewTedLastUser;

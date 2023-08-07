@@ -1,0 +1,32 @@
+-- --1.Realiza una preactualización de los estados del ted según la información del compilado
+-- DROP VIEW IF EXISTS prevTrackingUpdater;
+-- CREATE VIEW prevTrackingUpdater AS
+-- --opera sobre los ted de zendesk, actualiza los estado de departamento, cuenta las veces que se ha ingresado a DAF y asigna un código al estado de tramitación
+-- SELECT zt.NumTED,lu.unidaddestino AS DeptoActual,ts.DeptoActual AS DeptoAnterior,
+-- CASE 
+-- WHEN lu.unidaddestino = 'ADMINISTRACION Y FINANZAS' AND lu.unidaddestino <> ts.DeptoActual THEN ts.VecesDAF + 1 ELSE ts.VecesDAF
+-- END AS VecesDAF,
+-- CASE
+-- WHEN lu.unidaddestino='FORMACION CAPITAL HUMANO AVANZADO' THEN 1
+-- WHEN lu.unidaddestino='FISCALIA' THEN 2
+-- WHEN lu.unidaddestino='ADMINISTRACION Y FINANZAS' THEN 3
+-- ELSE 1
+-- END AS NumEstadoTED
+-- FROM (zendeskTED AS zt
+-- LEFT JOIN ViewTedLastUser lu
+-- ON zt.NumTED=lu.numero_expediente)
+-- LEFT JOIN TrackingStatus AS ts
+-- ON ts.NumTED=zt.NumTED;
+
+-- --2.Realiza la actualización final incluyendo las resoluciones emitidas
+-- DROP VIEW IF EXISTS ViewUpdatedTracking;
+-- CREATE VIEW ViewUpdatedTracking AS
+-- --se encarga de actualizar los TED zendesk con las resoluciones que ya se han emitido
+-- SELECT DISTINCT tu.NumTED, DeptoActual, tu.DeptoAnterior, tu.VecesDAF,
+-- CASE WHEN r.numero_expediente IS NOT NULL THEN 7 ELSE tu.NumEstadoTED END AS NumEstadoTED
+-- FROM prevTrackingUpdater AS tu
+-- LEFT JOIN (SELECT DISTINCT numero_expediente FROM NewTedResoluciones) AS r
+-- ON r.numero_expediente=tu.NumTED;
+
+--3. carga los datos actualizados para el estado de cada TED
+SELECT * FROM ViewUpdatedTracking;
