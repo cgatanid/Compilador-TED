@@ -6,18 +6,23 @@ El proyecto está compuesto por varios archivos de Python que trabajan en conjun
 
 El archivo principal del proyecto es "manager.py". Este archivo es el punto de entrada del programa y contiene la función principal "main()". Veamos paso a paso cómo funciona el proyecto:
 
-manager.py:
+## manager.py:
+
 
 Este archivo importa las bibliotecas necesarias y otros archivos del proyecto.
 Lee la configuración del archivo "dumpTED.conf", que contiene algunas variables de configuración importantes.
 La función "main()" inicia el proceso de compilación de datos TED.
-dumpTED.conf:
+
+## dumpTED.conf:
+
 
 Este archivo de configuración contiene variables como la hora de ejecución del programa, rutas de archivos y listas de archivos a considerar para la compilación.
-auxiliar.py:
+
+## auxiliar.py:
 
 Este archivo contiene funciones útiles, como "timeLog(logMessage)", que se utiliza para registrar mensajes de tiempo en los registros.
-dumpModule.py:
+
+## dumpModule.py:
 
 Contiene la función "backupJob()", que es responsable de realizar la compilación y respaldo de los datos TED.
 Esta función realiza una comparación entre los datos antiguos y los datos nuevos para detectar cambios en los archivos TED.
@@ -26,7 +31,8 @@ resetModule.py:
 
 Este archivo contiene la función "resetJob()", que es similar a "backupJob()", pero se utiliza para una compilación desde cero.
 Si se le pasa el texto "reset" al programa, se ejecutará la compilación desde cero.
-exportTED.py:
+
+## exportTED.py:
 
 Este archivo tiene la función "exportTED2CSV()", que se utiliza para exportar los datos compilados en formato CSV.
 Se generan dos archivos CSV, uno para los datos de cabecera y otro para los detalles de las transacciones TED.
