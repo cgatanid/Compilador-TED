@@ -39,6 +39,5 @@ Si se le pasa el texto "reset" al programa, se ejecutará la compilación desde 
 
 Este archivo tiene la función "exportTED2CSV()", que se utiliza para exportar los datos compilados en formato CSV.
 Se generan dos archivos CSV, uno para los datos de cabecera y otro para los detalles de las transacciones TED.
-Otras funcionalidades:
 
 
